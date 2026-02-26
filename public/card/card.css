@@ -1,0 +1,119 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'Georgia', serif;
+  perspective: 800px;
+}
+
+.card {
+  width: 280px;
+  height: 400px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Front face */
+.card-front {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f5 100%);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 3px solid #1a1a3e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.center-value {
+  font-size: 120px;
+  font-weight: bold;
+  color: #1a1a3e;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.corner {
+  position: absolute;
+  font-size: 28px;
+  font-weight: bold;
+  color: #1a1a3e;
+  line-height: 1;
+}
+
+.corner.top-left {
+  top: 16px;
+  left: 16px;
+}
+
+.corner.bottom-right {
+  bottom: 16px;
+  right: 16px;
+  transform: rotate(180deg);
+}
+
+/* Back face */
+.card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  border-radius: 16px;
+  background: linear-gradient(135deg, #1a1a3e 0%, #2d2d6b 100%);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  border: 3px solid #3a3a7e;
+  overflow: hidden;
+}
+
+.pattern {
+  width: 100%;
+  height: 100%;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 14px,
+      rgba(255, 255, 255, 0.04) 14px,
+      rgba(255, 255, 255, 0.04) 16px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 14px,
+      rgba(255, 255, 255, 0.04) 14px,
+      rgba(255, 255, 255, 0.04) 16px
+    );
+}
+
+.pattern::after {
+  content: '♦';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 64px;
+  color: rgba(255, 255, 255, 0.15);
+}

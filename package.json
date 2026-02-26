@@ -1,0 +1,36 @@
+{
+  "name": "obs-planning-poker",
+  "version": "1.0.0",
+  "description": "Planning poker card overlay for OBS Studio",
+  "author": "Darius Rosendahl",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts"
+  },
+  "keywords": [
+    "obs",
+    "planning-poker",
+    "scrum",
+    "agile",
+    "overlay",
+    "browser-source",
+    "streaming"
+  ],
+  "dependencies": {
+    "express": "^5.1.0",
+    "ws": "^8.18.0",
+    "obs-websocket-js": "^5.0.7"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/ws": "^8.5.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "tsx": "^4.19.0"
+  }
+}

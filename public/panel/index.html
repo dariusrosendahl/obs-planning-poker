@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planning Poker - Control Panel</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <div class="panel">
+    <h1>Planning Poker</h1>
+    <div class="current">
+      <span class="current-label">Current</span>
+      <span id="current-value" class="current-value">0</span>
+    </div>
+    <div id="card-grid" class="card-grid"></div>
+    <div class="controls">
+      <button id="btn-prev" class="control-btn">&larr; Prev</button>
+      <button id="btn-reveal" class="control-btn reveal-btn">Reveal / Hide</button>
+      <button id="btn-next" class="control-btn">Next &rarr;</button>
+    </div>
+    <div class="shortcuts">
+      <kbd>&larr;</kbd><kbd>&rarr;</kbd> cycle &nbsp;
+      <kbd>Space</kbd> reveal/hide &nbsp;
+      <kbd>0</kbd>-<kbd>8</kbd> pick by position
+    </div>
+  </div>
+  <script src="panel.js"></script>
+</body>
+</html>
