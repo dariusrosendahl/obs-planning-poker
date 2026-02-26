@@ -2,6 +2,16 @@
 
 A lightweight planning poker overlay for OBS Studio. Run a local server, add two browser sources to your scene, and control which card is shown during your stream or recording.
 
+## Preview
+
+**Control panel & card overlay**
+
+![Panel UI and card overlay](screenshots/panel-and-card.png)
+
+**In action — card overlay composited in OBS**
+
+![OBS in action with card overlay](screenshots/obs-in-action.png)
+
 ## How it works
 
 The server exposes two pages and a WebSocket:
