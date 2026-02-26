@@ -4,6 +4,12 @@
   "description": "Planning poker card overlay for OBS Studio",
   "author": "Darius Rosendahl",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dariusrosendahl/obs-planning-poker.git"
+  },
+  "homepage": "https://github.com/dariusrosendahl/obs-planning-poker",
+  "bugs": "https://github.com/dariusrosendahl/obs-planning-poker/issues",
   "type": "module",
   "engines": {
     "node": ">=18"
