@@ -15,8 +15,6 @@
     "node": ">=18"
   },
   "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "start": "tsx src/server.ts",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build"
@@ -30,18 +28,7 @@
     "browser-source",
     "streaming"
   ],
-  "dependencies": {
-    "dotenv": "^17.3.1",
-    "express": "^5.1.0",
-    "obs-websocket-js": "^5.0.7",
-    "ws": "^8.18.0"
-  },
   "devDependencies": {
-    "@tauri-apps/cli": "^2.10.1",
-    "@types/express": "^5.0.0",
-    "@types/node": "^22.0.0",
-    "@types/ws": "^8.5.0",
-    "tsx": "^4.19.0",
-    "typescript": "^5.7.0"
+    "@tauri-apps/cli": "^2.10.1"
   }
 }
