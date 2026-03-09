@@ -20,13 +20,44 @@ body {
   max-width: 420px;
 }
 
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  position: relative;
+}
+
 h1 {
   text-align: center;
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 12px;
   color: #a0a0d0;
   letter-spacing: 0.5px;
+}
+
+.pip-btn {
+  position: absolute;
+  right: 0;
+  background: none;
+  border: 1.5px solid #2a2a4e;
+  border-radius: 6px;
+  color: #7070a0;
+  cursor: pointer;
+  padding: 5px 6px;
+  line-height: 0;
+  transition: all 0.15s ease;
+}
+
+.pip-btn:hover {
+  color: #a0a0d0;
+  border-color: #4040a0;
+  background: #1a1a2e;
+}
+
+.pip-btn.active {
+  color: #5050d0;
+  border-color: #5050d0;
 }
 
 .current {

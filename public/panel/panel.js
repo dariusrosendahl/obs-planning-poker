@@ -72,3 +72,44 @@ function updatePanel(state) {
 }
 
 connect();
+
+// Document Picture-in-Picture
+const btnPip = document.getElementById('btn-pip');
+
+if ('documentPictureInPicture' in window) {
+  btnPip.addEventListener('click', async () => {
+    // If already in PiP, close it
+    if (documentPictureInPicture.window) {
+      documentPictureInPicture.window.close();
+      return;
+    }
+
+    const pipWindow = await documentPictureInPicture.requestWindow({
+      width: 320,
+      height: 520,
+    });
+
+    // Copy styles into PiP window
+    const styles = document.querySelectorAll('link[rel="stylesheet"], style');
+    styles.forEach((s) => pipWindow.document.head.appendChild(s.cloneNode(true)));
+
+    // Move panel content into PiP window
+    const panel = document.querySelector('.panel');
+    pipWindow.document.body.appendChild(panel);
+
+    btnPip.classList.add('active');
+
+    // Forward keyboard events from PiP window to our handler
+    pipWindow.document.addEventListener('keydown', (e) => {
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: e.key }));
+    });
+
+    // When PiP closes, move content back
+    pipWindow.addEventListener('pagehide', () => {
+      document.body.appendChild(panel);
+      btnPip.classList.remove('active');
+    });
+  });
+} else {
+  btnPip.style.display = 'none';
+}
