@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planning Poker</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <div class="panel">
+    <div class="title-row">
+      <h1>Planning Poker</h1>
+      <div class="title-actions">
+        <button id="btn-settings" class="icon-btn" title="Settings">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+        <button id="btn-pin" class="icon-btn" title="Pin on top">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="settings-panel" class="settings-panel hidden">
+      <div class="setting-row">
+        <label for="port-input">Server port</label>
+        <div class="setting-input-group">
+          <input id="port-input" type="number" min="1024" max="65535" class="setting-input">
+          <button id="btn-save-port" class="setting-save">Save</button>
+        </div>
+      </div>
+      <div class="setting-row">
+        <label>OBS Browser Source URL</label>
+        <code id="obs-url" class="obs-url-value">...</code>
+      </div>
+      <div id="restart-notice" class="restart-notice hidden">Restart app to apply new port</div>
+    </div>
+
+    <div class="current">
+      <span class="current-label">Current</span>
+      <span id="current-value" class="current-value">0</span>
+    </div>
+    <div id="card-grid" class="card-grid"></div>
+    <div class="controls">
+      <button id="btn-prev" class="control-btn">&larr; Prev</button>
+      <button id="btn-reveal" class="control-btn reveal-btn">Reveal / Hide</button>
+      <button id="btn-next" class="control-btn">Next &rarr;</button>
+    </div>
+    <div class="shortcuts">
+      <kbd>&larr;</kbd><kbd>&rarr;</kbd> cycle &nbsp;
+      <kbd>Space</kbd> reveal/hide &nbsp;
+      <kbd>0</kbd>-<kbd>8</kbd> pick by position
+    </div>
+  </div>
+  <script src="panel.js"></script>
+</body>
+</html>
