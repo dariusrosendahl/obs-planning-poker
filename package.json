@@ -1,7 +1,7 @@
 {
   "name": "obs-planning-poker",
   "version": "1.0.0",
-  "description": "Planning poker card overlay for OBS Studio",
+  "description": "Native planning poker card overlay for OBS Studio (Tauri)",
   "author": "Darius Rosendahl",
   "license": "MIT",
   "repository": {
@@ -10,10 +10,6 @@
   },
   "homepage": "https://github.com/dariusrosendahl/obs-planning-poker",
   "bugs": "https://github.com/dariusrosendahl/obs-planning-poker/issues",
-  "type": "module",
-  "engines": {
-    "node": ">=18"
-  },
   "scripts": {
     "tauri": "tauri",
     "tauri:dev": "tauri dev",

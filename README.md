@@ -1,6 +1,6 @@
 # OBS Planning Poker
 
-A lightweight planning poker overlay for OBS Studio. Run a local server, add two browser sources to your scene, and control which card is shown during your stream or recording.
+A native desktop app for showing planning poker cards as an OBS overlay. Built with Tauri — a single `.app` / `.dmg` replaces the old Node.js server entirely.
 
 ## Preview
 
@@ -14,33 +14,31 @@ A lightweight planning poker overlay for OBS Studio. Run a local server, add two
 
 ## How it works
 
-The server exposes two pages and a WebSocket:
+The app has two parts:
 
-- **`/panel`** -- Control panel you open in your browser. Pick a card value, cycle through values, and reveal/hide the card. Installable as a PWA for standalone access.
-- **`/card`** -- The card overlay. Add this as a Browser Source in OBS. It has a transparent background so it composites cleanly over your scene.
+- **Native panel** — A Tauri window where you pick a card value, cycle through values, and reveal/hide the card. Can be pinned always-on-top.
+- **Card overlay** — A local HTTP server (axum) serves the card page at `http://localhost:7777/card`. Add this as a Browser Source in OBS. Transparent background, composites cleanly over your scene.
 
-Both pages connect to the same WebSocket so state stays in sync. Selecting a value on the panel updates the card instantly; revealing/hiding flips the card with a CSS 3D animation.
+The panel communicates with the overlay via WebSocket so state stays in sync instantly. Revealing/hiding flips the card with a CSS 3D animation.
 
-Connects to OBS via `obs-websocket-js` (optional) for automation hooks like scene switching or source toggling. The server runs fine without OBS connected.
+## Install
 
-## Quick start
+Download the latest `.dmg` from the [Releases](https://github.com/dariusrosendahl/obs-planning-poker/releases) page, or build from source:
 
 ```bash
 pnpm install
-pnpm start
+pnpm tauri:build
 ```
 
-The server starts on **http://localhost:3000** by default.
-
-Open `http://localhost:3000/panel` in your browser to control the card.
+The built app is at `src-tauri/target/release/bundle/macos/Planning Poker.app`.
 
 ## OBS setup
 
 1. Add a **Browser Source** to your scene.
-2. Set the URL to `http://localhost:3000/card`.
+2. Set the URL to `http://localhost:7777/card` (port is configurable in settings).
 3. Set width to **280** and height to **400**.
 4. Check "Shutdown source when not visible" if you like.
-5. The background is transparent -- the card floats over your scene.
+5. The background is transparent — the card floats over your scene.
 
 ## Panel controls
 
@@ -51,8 +49,9 @@ Open `http://localhost:3000/panel` in your browser to control the card.
 | `Prev` / `Next` buttons | Cycle through values |
 | Arrow keys | Cycle through values |
 | Spacebar | Toggle reveal/hide |
-| Number keys `0`-`8` | Select card by position (first nine values) |
-| `Pin on top` button | Float the panel as an always-on-top window (Chrome 116+) |
+| Number keys `0`–`8` | Select card by position (first nine values) |
+| Pin button | Float the panel as an always-on-top window |
+| Gear button | Open settings to change the server port |
 
 ## Card values
 
@@ -60,55 +59,37 @@ Open `http://localhost:3000/panel` in your browser to control the card.
 
 ## Configuration
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PORT` | `3000` | Server port |
-| `OBS_WS_URL` | `ws://localhost:4455` | OBS WebSocket URL (v5) |
-
-Override by passing environment variables inline:
-
-```bash
-PORT=9000 pnpm start
-OBS_WS_URL=ws://192.168.1.10:4455 pnpm start
-```
-
-## Install as PWA
-
-The control panel can be installed as a Progressive Web App for quick standalone access:
-
-1. Open `http://localhost:3000/panel` in Chrome.
-2. Click the install icon in the address bar (or "Add to Home Screen" on mobile).
-3. The panel launches in its own window without browser chrome.
-
-The PWA requires the server to be running — there is no offline mode.
+Open the settings panel (gear icon) to change the server port. Default is **7777**. Changes take effect after restarting the app.
 
 ## Project structure
 
 ```
 src/
-  server.ts      Express + WebSocket server
-  state.ts       Card state machine
-  types.ts       TypeScript types and message definitions
-  constants.ts   Configuration constants
+  panel/          Control panel UI (HTML/CSS/JS, served by Tauri)
+src-tauri/
+  src/
+    main.rs       App entry point and Tauri setup
+    server.rs     Axum HTTP + WebSocket server for card overlay
+    state.rs      Card state machine
+    types.rs      Message types
+    commands.rs   Tauri IPC command handlers
+    config.rs     Persistent port configuration
 public/
-  card/          Browser source overlay (HTML/CSS/JS)
-  panel/         Control panel UI (HTML/CSS/JS)
-    icons/       PWA icons (192×192, 512×512)
-    manifest.json  Web app manifest
-    sw.js        Service worker (fetch pass-through)
+  card/           Browser source overlay (HTML/CSS/JS)
 ```
 
 ## Development
 
 ```bash
-pnpm dev        # start with file watching (auto-restart on changes)
-pnpm start      # start without watching
+pnpm install
+pnpm tauri:dev
 ```
 
 ## Requirements
 
-- Node.js >= 18
+- Rust (for building)
 - pnpm
+- macOS 10.15+ (currently macOS only)
 
 ## License
 
