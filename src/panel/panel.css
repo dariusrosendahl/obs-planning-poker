@@ -36,9 +36,14 @@ h1 {
   letter-spacing: 0.5px;
 }
 
-.pip-btn {
+.title-actions {
   position: absolute;
   right: 0;
+  display: flex;
+  gap: 4px;
+}
+
+.icon-btn {
   background: none;
   border: 1.5px solid #2a2a4e;
   border-radius: 6px;
@@ -49,17 +54,107 @@ h1 {
   transition: all 0.15s ease;
 }
 
-.pip-btn:hover {
+.icon-btn:hover {
   color: #a0a0d0;
   border-color: #4040a0;
   background: #1a1a2e;
 }
 
-.pip-btn.active {
+.icon-btn.active {
   color: #5050d0;
   border-color: #5050d0;
 }
 
+/* Settings panel */
+.settings-panel {
+  margin-bottom: 12px;
+  padding: 12px;
+  background: #1a1a2e;
+  border-radius: 10px;
+  border: 1px solid #2a2a4e;
+}
+
+.settings-panel.hidden {
+  display: none;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.setting-row + .setting-row {
+  margin-top: 10px;
+}
+
+.setting-row label {
+  font-size: 13px;
+  color: #7070a0;
+  white-space: nowrap;
+}
+
+.setting-input-group {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.setting-input {
+  width: 80px;
+  padding: 5px 8px;
+  font-size: 13px;
+  background: #0f0f1a;
+  border: 1.5px solid #2a2a4e;
+  border-radius: 6px;
+  color: #e0e0f0;
+  text-align: center;
+  outline: none;
+}
+
+.setting-input:focus {
+  border-color: #4040a0;
+}
+
+.setting-save {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #2a1a3e;
+  border: 1.5px solid #5030a0;
+  border-radius: 6px;
+  color: #c0b0e0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.setting-save:hover {
+  background: #3a2a5e;
+}
+
+.obs-url-value {
+  font-size: 12px;
+  color: #7070a0;
+  background: #0f0f1a;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #2a2a4e;
+  user-select: all;
+}
+
+.restart-notice {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 12px;
+  color: #d08040;
+}
+
+.restart-notice.hidden {
+  display: none;
+}
+
+/* Card display */
 .current {
   display: flex;
   align-items: center;
@@ -175,21 +270,4 @@ kbd {
   font-family: inherit;
   font-size: 11px;
   color: #8080b0;
-}
-
-.obs-url {
-  text-align: center;
-  font-size: 11px;
-  color: #505080;
-  padding: 4px 0 0;
-}
-
-.obs-url code {
-  color: #7070a0;
-  background: #1a1a2e;
-  padding: 2px 6px;
-  border-radius: 4px;
-  border: 1px solid #2a2a4e;
-  font-size: 11px;
-  user-select: all;
 }

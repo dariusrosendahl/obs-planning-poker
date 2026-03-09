@@ -9,6 +9,14 @@ const btnPrev = document.getElementById('btn-prev');
 const btnReveal = document.getElementById('btn-reveal');
 const btnNext = document.getElementById('btn-next');
 const btnPin = document.getElementById('btn-pin');
+const btnSettings = document.getElementById('btn-settings');
+const settingsPanel = document.getElementById('settings-panel');
+const portInput = document.getElementById('port-input');
+const btnSavePort = document.getElementById('btn-save-port');
+const obsUrl = document.getElementById('obs-url');
+const restartNotice = document.getElementById('restart-notice');
+
+let currentPort = 7777;
 
 // Build card buttons
 CARD_VALUES.forEach((value) => {
@@ -27,6 +35,9 @@ btnReveal.addEventListener('click', () => sendCommand('toggle_reveal'));
 
 // Keyboard shortcuts
 document.addEventListener('keydown', (e) => {
+  // Ignore when typing in input
+  if (e.target.tagName === 'INPUT') return;
+
   if (e.key === 'ArrowLeft') {
     sendCommand('prev_card');
   } else if (e.key === 'ArrowRight') {
@@ -59,11 +70,36 @@ function updatePanel(state) {
   });
 }
 
-// Load initial state and show OBS URL
+// Load initial state and port
 sendCommand('get_state');
 invoke('get_port').then((port) => {
-  const obsUrl = document.getElementById('obs-url');
-  if (obsUrl) obsUrl.textContent = `localhost:${port}/card`;
+  currentPort = port;
+  portInput.value = port;
+  obsUrl.textContent = `http://localhost:${port}/card`;
+});
+
+// Settings toggle
+btnSettings.addEventListener('click', () => {
+  settingsPanel.classList.toggle('hidden');
+  btnSettings.classList.toggle('active');
+});
+
+// Save port
+btnSavePort.addEventListener('click', async () => {
+  const newPort = parseInt(portInput.value, 10);
+  if (newPort < 1024 || newPort > 65535 || isNaN(newPort)) return;
+
+  try {
+    await invoke('set_port', { port: newPort });
+    obsUrl.textContent = `http://localhost:${newPort}/card`;
+    if (newPort !== currentPort) {
+      restartNotice.classList.remove('hidden');
+    } else {
+      restartNotice.classList.add('hidden');
+    }
+  } catch (err) {
+    console.error('Failed to save port:', err);
+  }
 });
 
 // Always on top (native window pinning)

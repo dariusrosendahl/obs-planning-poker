@@ -1,8 +1,10 @@
+use std::path::PathBuf;
 use std::sync::Arc;
 
 use tauri::State;
 use tokio::sync::broadcast;
 
+use crate::config::{self, AppConfig};
 use crate::state::AppState;
 use crate::types::{CardState, ServerMessage};
 
@@ -10,6 +12,7 @@ pub struct SharedState {
     pub app_state: Arc<AppState>,
     pub tx: broadcast::Sender<String>,
     pub port: u16,
+    pub config_dir: PathBuf,
 }
 
 fn broadcast_update(shared: &SharedState, new_state: &CardState) {
@@ -29,6 +32,12 @@ pub fn get_state(shared: State<'_, SharedState>) -> CardState {
 #[tauri::command]
 pub fn get_port(shared: State<'_, SharedState>) -> u16 {
     shared.port
+}
+
+#[tauri::command]
+pub fn set_port(port: u16, shared: State<'_, SharedState>) -> Result<(), String> {
+    let cfg = AppConfig { port };
+    config::save(&shared.config_dir, &cfg)
 }
 
 #[tauri::command]

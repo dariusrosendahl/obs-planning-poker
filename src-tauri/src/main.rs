@@ -2,39 +2,38 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod commands;
+mod config;
 mod server;
 mod state;
 mod types;
 
-use std::sync::Arc;
 use std::path::PathBuf;
+use std::sync::Arc;
 
 use commands::SharedState;
 use state::AppState;
 use tauri::Manager;
 use tokio::sync::broadcast;
 
-fn get_port() -> u16 {
-    std::env::var("PORT")
-        .ok()
-        .and_then(|s| s.parse().ok())
-        .unwrap_or(7777)
-}
-
 fn main() {
-    let port = get_port();
     let app_state = Arc::new(AppState::new());
     let (tx, _rx) = broadcast::channel::<String>(64);
 
-    let shared = SharedState {
-        app_state: app_state.clone(),
-        tx: tx.clone(),
-        port,
-    };
-
     tauri::Builder::default()
-        .manage(shared)
         .setup(move |app| {
+            // Load config from app config directory
+            let config_dir = app.path().app_config_dir()?;
+            let cfg = config::load(&config_dir);
+            let port = cfg.port;
+
+            let shared = SharedState {
+                app_state: app_state.clone(),
+                tx: tx.clone(),
+                port,
+                config_dir,
+            };
+            app.manage(shared);
+
             // Resolve card directory path
             let card_dir: PathBuf = app
                 .path()
@@ -60,6 +59,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             commands::get_state,
             commands::get_port,
+            commands::set_port,
             commands::set_card,
             commands::next_card,
             commands::prev_card,
