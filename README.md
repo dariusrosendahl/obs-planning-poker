@@ -52,6 +52,7 @@ Open `http://localhost:3000/panel` in your browser to control the card.
 | Arrow keys | Cycle through values |
 | Spacebar | Toggle reveal/hide |
 | Number keys `0`-`8` | Select card by position (first nine values) |
+| `Pin on top` button | Float the panel as an always-on-top window (Chrome 116+) |
 
 ## Card values
 
