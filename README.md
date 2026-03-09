@@ -16,7 +16,7 @@ A lightweight planning poker overlay for OBS Studio. Run a local server, add two
 
 The server exposes two pages and a WebSocket:
 
-- **`/panel`** -- Control panel you open in your browser. Pick a card value, cycle through values, and reveal/hide the card.
+- **`/panel`** -- Control panel you open in your browser. Pick a card value, cycle through values, and reveal/hide the card. Installable as a PWA for standalone access.
 - **`/card`** -- The card overlay. Add this as a Browser Source in OBS. It has a transparent background so it composites cleanly over your scene.
 
 Both pages connect to the same WebSocket so state stays in sync. Selecting a value on the panel updates the card instantly; revealing/hiding flips the card with a CSS 3D animation.
@@ -71,6 +71,16 @@ PORT=9000 pnpm start
 OBS_WS_URL=ws://192.168.1.10:4455 pnpm start
 ```
 
+## Install as PWA
+
+The control panel can be installed as a Progressive Web App for quick standalone access:
+
+1. Open `http://localhost:3000/panel` in Chrome.
+2. Click the install icon in the address bar (or "Add to Home Screen" on mobile).
+3. The panel launches in its own window without browser chrome.
+
+The PWA requires the server to be running — there is no offline mode.
+
 ## Project structure
 
 ```
@@ -82,6 +92,9 @@ src/
 public/
   card/          Browser source overlay (HTML/CSS/JS)
   panel/         Control panel UI (HTML/CSS/JS)
+    icons/       PWA icons (192×192, 512×512)
+    manifest.json  Web app manifest
+    sw.js        Service worker (fetch pass-through)
 ```
 
 ## Development
