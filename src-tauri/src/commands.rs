@@ -9,6 +9,7 @@ use crate::types::{CardState, ServerMessage};
 pub struct SharedState {
     pub app_state: Arc<AppState>,
     pub tx: broadcast::Sender<String>,
+    pub port: u16,
 }
 
 fn broadcast_update(shared: &SharedState, new_state: &CardState) {
@@ -23,6 +24,11 @@ fn broadcast_update(shared: &SharedState, new_state: &CardState) {
 #[tauri::command]
 pub fn get_state(shared: State<'_, SharedState>) -> CardState {
     shared.app_state.get()
+}
+
+#[tauri::command]
+pub fn get_port(shared: State<'_, SharedState>) -> u16 {
+    shared.port
 }
 
 #[tauri::command]

@@ -21,7 +21,7 @@ pub struct ServerState {
     pub tx: broadcast::Sender<String>,
 }
 
-pub async fn start_server(app_state: Arc<AppState>, tx: broadcast::Sender<String>, card_dir: String) {
+pub async fn start_server(app_state: Arc<AppState>, tx: broadcast::Sender<String>, card_dir: String, port: u16) {
     let server_state = Arc::new(ServerState {
         app_state,
         tx,
@@ -32,11 +32,12 @@ pub async fn start_server(app_state: Arc<AppState>, tx: broadcast::Sender<String
         .nest_service("/card", ServeDir::new(card_dir))
         .with_state(server_state);
 
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
+    let addr = format!("127.0.0.1:{}", port);
+    let listener = tokio::net::TcpListener::bind(&addr)
         .await
-        .expect("Failed to bind to port 3000");
+        .unwrap_or_else(|_| panic!("Failed to bind to port {}", port));
 
-    println!("Card overlay server running on http://localhost:3000/card");
+    println!("Card overlay server running on http://localhost:{}/card", port);
 
     axum::serve(listener, app).await.expect("Server error");
 }

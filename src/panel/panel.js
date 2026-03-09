@@ -59,8 +59,12 @@ function updatePanel(state) {
   });
 }
 
-// Load initial state
+// Load initial state and show OBS URL
 sendCommand('get_state');
+invoke('get_port').then((port) => {
+  const obsUrl = document.getElementById('obs-url');
+  if (obsUrl) obsUrl.textContent = `localhost:${port}/card`;
+});
 
 // Always on top (native window pinning)
 let pinned = false;

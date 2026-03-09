@@ -176,3 +176,20 @@ kbd {
   font-size: 11px;
   color: #8080b0;
 }
+
+.obs-url {
+  text-align: center;
+  font-size: 11px;
+  color: #505080;
+  padding: 4px 0 0;
+}
+
+.obs-url code {
+  color: #7070a0;
+  background: #1a1a2e;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #2a2a4e;
+  font-size: 11px;
+  user-select: all;
+}
