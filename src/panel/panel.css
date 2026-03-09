@@ -254,6 +254,13 @@ h1 {
   background: #3a2a5e;
 }
 
+.reveal-btn.active {
+  background: #4030a0;
+  border-color: #6050d0;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(80, 80, 208, 0.4);
+}
+
 .shortcuts {
   text-align: center;
   font-size: 12px;

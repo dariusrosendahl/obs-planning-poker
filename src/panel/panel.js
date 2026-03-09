@@ -68,6 +68,7 @@ function updatePanel(state) {
   document.querySelectorAll('.card-btn').forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.value === state.value);
   });
+  btnReveal.classList.toggle('active', state.revealed);
 }
 
 // Load initial state and port
