@@ -2,6 +2,9 @@
 name = "planning-poker"
 version = "1.0.0"
 edition = "2021"
+authors = ["Darius Rosendahl (DoorDarius)"]
+homepage = "https://github.com/dariusrosendahl"
+description = "Planning poker card overlay for OBS Studio"
 
 [dependencies]
 tauri = { version = "2", features = [] }

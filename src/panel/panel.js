@@ -112,3 +112,11 @@ btnPin.addEventListener('click', async () => {
   await win.setAlwaysOnTop(pinned);
   btnPin.classList.toggle('active', pinned);
 });
+
+// Open external links via Tauri command
+document.querySelectorAll('.footer a').forEach((a) => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    invoke('open_url', { url: a.href });
+  });
+});

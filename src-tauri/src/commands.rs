@@ -74,3 +74,17 @@ pub fn hide_card(shared: State<'_, SharedState>) -> CardState {
     broadcast_update(&shared, &new_state);
     new_state
 }
+
+#[tauri::command]
+pub fn open_url(url: String) {
+    #[cfg(target_os = "macos")]
+    {
+        let _ = std::process::Command::new("open").arg(&url).spawn();
+    }
+    #[cfg(target_os = "windows")]
+    {
+        let _ = std::process::Command::new("cmd")
+            .args(["/c", "start", "", &url])
+            .spawn();
+    }
+}

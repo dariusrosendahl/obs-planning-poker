@@ -12,6 +12,7 @@ use std::sync::Arc;
 
 use commands::SharedState;
 use state::AppState;
+use tauri::menu::{AboutMetadata, MenuBuilder, SubmenuBuilder};
 use tauri::Manager;
 use tokio::sync::broadcast;
 
@@ -20,6 +21,44 @@ fn main() {
     let (tx, _rx) = broadcast::channel::<String>(64);
 
     tauri::Builder::default()
+        .menu(|handle| {
+            let about_metadata = AboutMetadata {
+                name: Some("Planning Poker".to_string()),
+                copyright: Some("\u{00A9} 2026 Darius Rosendahl (DoorDarius)".to_string()),
+                credits: Some("github.com/dariusrosendahl\nwww.doordarius.nl".to_string()),
+                ..Default::default()
+            };
+            let app_submenu = SubmenuBuilder::new(handle, "Planning Poker")
+                .about(Some(about_metadata))
+                .separator()
+                .services()
+                .separator()
+                .hide()
+                .hide_others()
+                .show_all()
+                .separator()
+                .quit()
+                .build()?;
+            let edit_submenu = SubmenuBuilder::new(handle, "Edit")
+                .undo()
+                .redo()
+                .separator()
+                .cut()
+                .copy()
+                .paste()
+                .select_all()
+                .build()?;
+            let window_submenu = SubmenuBuilder::new(handle, "Window")
+                .minimize()
+                .separator()
+                .close_window()
+                .build()?;
+            MenuBuilder::new(handle)
+                .item(&app_submenu)
+                .item(&edit_submenu)
+                .item(&window_submenu)
+                .build()
+        })
         .setup(move |app| {
             // Load config from app config directory
             let config_dir = app.path().app_config_dir()?;
@@ -65,6 +104,7 @@ fn main() {
             commands::prev_card,
             commands::toggle_reveal,
             commands::hide_card,
+            commands::open_url,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
