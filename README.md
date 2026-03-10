@@ -23,7 +23,22 @@ The panel communicates with the overlay via WebSocket so state stays in sync ins
 
 ## Install
 
-Download the latest `.dmg` from the [Releases](https://github.com/dariusrosendahl/obs-planning-poker/releases) page, or build from source:
+Download the latest release from the [Releases](https://github.com/dariusrosendahl/obs-planning-poker/releases) page:
+
+- **macOS** — `.dmg` (Apple Silicon and Intel)
+- **Windows** — `.msi` or `.exe` installer
+
+### macOS: "damaged" warning
+
+macOS blocks unsigned apps downloaded from the internet. After downloading, run this in Terminal before opening the `.dmg`:
+
+```bash
+xattr -cr ~/Downloads/Planning.Poker_*.dmg
+```
+
+Then open the DMG and drag the app to Applications as usual.
+
+### Build from source
 
 ```bash
 pnpm install
@@ -89,7 +104,7 @@ pnpm tauri:dev
 
 - Rust (for building)
 - pnpm
-- macOS 10.15+ (currently macOS only)
+- macOS 10.15+ or Windows 10+
 
 ## License
 
