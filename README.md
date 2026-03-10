@@ -28,15 +28,14 @@ Download the latest release from the [Releases](https://github.com/dariusrosenda
 - **macOS** — `.dmg` (Apple Silicon and Intel)
 - **Windows** — `.msi` or `.exe` installer
 
-### macOS: "damaged" warning
+### macOS: "unidentified developer" warning
 
-macOS blocks unsigned apps downloaded from the internet. After downloading, run this in Terminal before opening the `.dmg`:
+macOS blocks apps from unidentified developers. To open the app:
 
-```bash
-xattr -cr ~/Downloads/Planning.Poker_*.dmg
-```
-
-Then open the DMG and drag the app to Applications as usual.
+1. Open the `.dmg` and drag the app to **Applications**
+2. Try to open the app — macOS will block it
+3. Go to **System Settings → Privacy & Security** and click **"Allow Anyway"**
+4. Open the app again — it will launch normally
 
 ### Build from source
 
